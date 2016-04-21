@@ -1,0 +1,41 @@
+kibana:
+  repository:
+    title: Kibana 4.5 Debian Repository
+    url: deb http://packages.elastic.co/kibana/4.5/debian stable main
+    file: /etc/apt/sources.list.d/kibana.list
+    key_url: https://packages.elastic.co/GPG-KEY-elasticsearchA
+  service: kibana
+  config_file: '/etc/kibana/kibana.yml
+  config:
+    server:
+      port: 5601
+      host: 0.0.0.0
+      basePath: ''
+      maxPayloadBytes: 1048576
+      ssl:
+        cert: /path/to/your/server.crt
+        key: /path/to/your/server.key
+    elasticsearch:
+      url: http://127.0.0.1:9200
+      preserveHost: True
+      username: user
+      password: pass
+      ssl:
+        cert: /path/to/your/server.crt
+        key: /path/to/your/server.key
+        ca: /path/to/your/CA.pem
+        verify: True
+      pingTimeout: 1500
+      requestTimeout: 30000
+      startupTimeout: 5000
+    kibana:
+      index: .kibana
+      defaultAppId: discover
+    pid:
+      file: /var/run/kibana.pid  {# Be sure that the kibana user has the rights to create files in this directory *}
+    logging:
+      dest: stdout  {# If you change this to something else than stdout, be sure that the kibana user has the rights to create files in this directory *}
+      silent: False
+      quiet: False
+      verbose: False
+

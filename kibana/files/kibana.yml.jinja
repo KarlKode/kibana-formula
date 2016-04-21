@@ -1,0 +1,25 @@
+{%- from 'kibana/map.jinja' import kibana with context %}
+
+{%- macro config_line(key0, value0, prefix='') %}
+  {%- if value0 is mapping %}
+    {%- for key1, value1 in value0.items() %}
+      {{- config_line(key1, value1, prefix + key0 + '.')|indent(0) }}
+    {%- endfor %}
+  {%- else %}
+{{ prefix }}{{ key0 }}: {{ value0|yaml_encode }}
+  {%- endif %}
+{%- endmacro %}
+
+{%- for section, entries in kibana.config.items() %}
+{#-  {%- for key, value in entries.items() %}
+    {%- if value is mapping %}
+      {%- for key_sub, value_sub in value.items() %}
+        {{ section }}.{{ key }}.{{ key_sub }}: {{ value_sub|yaml_encode }}
+      {%- endfor %}
+    {%- else %}
+      {{ section }}{{ key }}: {{ value|yaml_encode }}
+    {%- endif %}
+  {%- endfor %} #}
+{{ config_line(section, entries) }}
+{% endfor %}
+

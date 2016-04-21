@@ -1,0 +1,15 @@
+{% set kibana = salt['grains.filter_by']({
+  'Debian': {
+    'package': 'kibana',
+    'repository': {
+      'title': 'Kibana 4.5 Debian Repository',
+      'url': 'deb http://packages.elastic.co/kibana/4.5/debian stable main',
+      'file': '/etc/apt/sources.list.d/kibana.list',
+      'key_url': 'https://packages.elastic.co/GPG-KEY-elasticsearch',
+    },
+    'config_file': '/opt/kibana/config/kibana.yml',
+    'config': {},
+    'service': 'kibana',
+  },
+}, merge=salt['pillar.get']('kibana')) %}
+
